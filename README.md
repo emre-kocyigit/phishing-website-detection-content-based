@@ -14,7 +14,19 @@ This is an End-to-End Machine Learning Project which focuses on phishing website
 - Extract features and create a vector which contains numerical values for each feature
 - Repeat feature extraction process for all content\websites and create a structured dataframe
 - Add label at the end to the dataframes | 1 for phishing 0 for legitimate
-- Save the dataframe as csv and final!
+- Save the dataframe as csv and structured_data files are ready!
+  - Check "structured_data_legitimate.csv" and "structured_data_phishing.csv" files. 
+- After obtaining structured data, you can use combine them and use them as train and test data
+- You can split data as train and test like in the machine_learning.py first part, or you can implement K-fold cross-validation like in the second part of the same file. I implemented K-fold as K=5.
+- Then I implemented five different ML models:
+  - Support Vector Machine
+  - Gaussian Naive Bayes
+  - Decision Tree
+  - Random Forest
+  - AdaBoost
+- You can obtain the confusion matrix, and performance measures: accuracy, precision, recall
+- Finally, I visualized the performance measures for all models.
+  - Naive Bayes is the best for my case.
 
 ## important notes
 - features are content-based and need BeautifulSoup module's methods and fields etc So, you should install it.
