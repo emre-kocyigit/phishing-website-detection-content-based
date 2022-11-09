@@ -41,7 +41,28 @@ def create_vector(soup):
         fe.number_of_href(soup),
         fe.number_of_paragraph(soup),
         fe.number_of_script(soup),
-        fe.length_of_title(soup)
+        fe.length_of_title(soup),
+        fe.has_h1(soup),
+        fe.has_h2(soup),
+        fe.has_h3(soup),
+        fe.length_of_text(soup),
+        fe.number_of_clickable_button(soup),
+        fe.number_of_a(soup),
+        fe.number_of_img(soup),
+        fe.number_of_div(soup),
+        fe.number_of_figure(soup),
+        fe.has_footer(soup),
+        fe.has_form(soup),
+        fe.has_text_area(soup),
+        fe.has_iframe(soup),
+        fe.has_text_input(soup),
+        fe.number_of_meta(soup),
+        fe.has_nav(soup),
+        fe.has_object(soup),
+        fe.has_picture(soup),
+        fe.number_of_sources(soup),
+        fe.number_of_span(soup),
+        fe.number_of_table(soup)
     ]
 
 
@@ -83,7 +104,28 @@ columns = [
     'number_of_href',
     'number_of_paragraph',
     'number_of_script',
-    'length_of_title'
+    'length_of_title',
+    'has_h1',
+    'has_h2',
+    'has_h3',
+    'length_of_text',
+    'number_of_clickable_button',
+    'number_of_a',
+    'number_of_img',
+    'number_of_div',
+    'number_of_figure',
+    'has_footer',
+    'has_form',
+    'has_text_area',
+    'has_iframe',
+    'has_text_input',
+    'number_of_meta',
+    'has_nav',
+    'has_object',
+    'has_picture',
+    'number_of_sources',
+    'number_of_span',
+    'number_of_table'
 ]
 
 df = pd.DataFrame(data=data, columns=columns)

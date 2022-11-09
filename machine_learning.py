@@ -8,6 +8,10 @@ from sklearn import tree
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
 
 from sklearn.metrics import confusion_matrix
 
@@ -52,6 +56,15 @@ ab_model = AdaBoostClassifier()
 
 # Gaussian Naive Bayes
 nb_model = GaussianNB()
+
+# Neural Network
+nn_model = MLPClassifier(alpha=1)
+
+# KNeighborsClassifier
+kn_model = KNeighborsClassifier()
+
+# Gaussian Process
+#gp_model = GaussianProcessClassifier(1.0 * RBF(1.0))
 
 # Step 7 train the model
 svm_model.fit(x_train, y_train)
@@ -131,6 +144,9 @@ dt_accuracy_list, dt_precision_list, dt_recall_list = [], [], []
 ab_accuracy_list, ab_precision_list, ab_recall_list = [], [], []
 svm_accuracy_list, svm_precision_list, svm_recall_list = [], [], []
 nb_accuracy_list, nb_precision_list, nb_recall_list = [], [], []
+nn_accuracy_list, nn_precision_list, nn_recall_list = [], [], []
+kn_accuracy_list, kn_precision_list, kn_recall_list = [], [], []
+#gp_accuracy_list, gp_precision_list, gp_recall_list = [], [], []
 
 
 for i in range(0, K):
@@ -179,6 +195,34 @@ for i in range(0, K):
     nb_precision_list.append(nb_precision)
     nb_recall_list.append(nb_recall)
 
+    # ----- NEURAL NETWORK ----- #
+    nn_model.fit(X_train_list[i], Y_train_list[i])
+    nn_predictions = nn_model.predict(X_test_list[i])
+    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=nn_predictions).ravel()
+    nn_accuracy, nn_precision, nn_recall = calculate_measures(tn, tp, fn, fp)
+    nn_accuracy_list.append(nn_accuracy)
+    nn_precision_list.append(nn_precision)
+    nn_recall_list.append(nn_recall)
+
+    # ----- K-NEIGHBOURS CLASSIFIER ----- #
+    kn_model.fit(X_train_list[i], Y_train_list[i])
+    kn_predictions = kn_model.predict(X_test_list[i])
+    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=kn_predictions).ravel()
+    kn_accuracy, kn_precision, kn_recall = calculate_measures(tn, tp, fn, fp)
+    kn_accuracy_list.append(kn_accuracy)
+    kn_precision_list.append(kn_precision)
+    kn_recall_list.append(kn_recall)
+
+    """
+    # ----- GAUSSIAN PROCESS ----- #
+    gp_model.fit(X_train_list[i], Y_train_list[i])
+    gp_predictions = gp_model.predict(X_test_list[i])
+    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=gp_predictions).ravel()
+    gp_accuracy, gp_precision, gp_recall = calculate_measures(tn, tp, fn, fp)
+    gp_accuracy_list.append(gp_accuracy)
+    gp_precision_list.append(gp_precision)
+    gp_recall_list.append(gp_recall)
+    """
 
 RF_accuracy = sum(rf_accuracy_list) / len(rf_accuracy_list)
 RF_precision = sum(rf_precision_list) / len(rf_precision_list)
@@ -225,12 +269,38 @@ print("Gaussian Naive Bayes precision ==> ", NB_precision)
 print("Gaussian Naive Bayes recall ==> ", NB_recall)
 
 
-data = {'accuracy': [NB_accuracy, SVM_accuracy, DT_accuracy, RF_accuracy, AB_accuracy],
-        'precision': [NB_precision, SVM_precision, DT_precision, RF_precision, AB_precision],
-        'recall': [NB_recall, SVM_recall, DT_recall, RF_recall, AB_recall]
+NN_accuracy = sum(nn_accuracy_list) / len(nn_accuracy_list)
+NN_precision = sum(nn_precision_list) / len(nn_precision_list)
+NN_recall = sum(nn_recall_list) / len(nn_recall_list)
+
+print("Neural Network accuracy ==> ", NN_accuracy)
+print("Neural Network precision ==> ", NN_precision)
+print("Neural Network recall ==> ", NN_recall)
+
+
+KN_accuracy = sum(kn_accuracy_list) / len(kn_accuracy_list)
+KN_precision = sum(kn_precision_list) / len(kn_precision_list)
+KN_recall = sum(kn_recall_list) / len(kn_recall_list)
+
+print("K-Neighbours Classifier accuracy ==> ", KN_accuracy)
+print("K-Neighbours Classifier precision ==> ", KN_precision)
+print("K-Neighbours Classifier recall ==> ", KN_recall)
+"""
+GP_accuracy = sum(gp_accuracy_list) / len(gp_accuracy_list)
+GP_precision = sum(gp_precision_list) / len(gp_precision_list)
+GP_recall = sum(gp_recall_list) / len(gp_recall_list)
+
+print("Gaussian Process accuracy ==> ", GP_accuracy)
+print("Gaussian Process precision ==> ", GP_precision)
+print("Gaussian Process recall ==> ", GP_recall)
+"""
+
+data = {'accuracy': [NB_accuracy, SVM_accuracy, DT_accuracy, RF_accuracy, AB_accuracy, NN_accuracy, KN_accuracy],
+        'precision': [NB_precision, SVM_precision, DT_precision, RF_precision, AB_precision, NN_precision, KN_precision],
+        'recall': [NB_recall, SVM_recall, DT_recall, RF_recall, AB_recall, NN_recall, KN_recall]
         }
 
-index = ['NB', 'SVM', 'DT', 'RF', 'AB']
+index = ['NB', 'SVM', 'DT', 'RF', 'AB', 'NN', 'KN']
 
 df_results = pd.DataFrame(data=data, index=index)
 
