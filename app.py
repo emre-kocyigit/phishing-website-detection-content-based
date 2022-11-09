@@ -5,12 +5,14 @@ from bs4 import BeautifulSoup
 import requests as re
 import matplotlib.pyplot as plt
 
+# col1, col2 = st.columns([1, 3])
+
 st.title('Phishing Website Detection using Machine Learning')
 st.write('This ML-based app is developed for educational purposes. Objective of the app is detecting phishing websites only using content data. Not URL!'
          ' You can see the details of approach, data set, and feature set if you click on _"See The Details"_. ')
 
 
-with st.expander("DETAILS"):
+with st.expander("PROJECT DETAILS"):
     st.subheader('Approach')
     st.write('I used _supervised learning_ to classify phishing and legitimate websites. '
              'I benefit from content-based approach and focus on html of the websites. '
@@ -33,13 +35,13 @@ with st.expander("DETAILS"):
     legitimate_rate = 100 - phishing_rate
     sizes = [phishing_rate, legitimate_rate]
     explode = (0.1, 0)
-    fig, ax =plt.subplots()
+    fig, ax = plt.subplots()
     ax.pie(sizes, explode=explode, labels=labels, shadow=True, startangle=90, autopct='%1.1f%%')
     ax.axis('equal')
     st.pyplot(fig)
     # ----- !!!!! ----- #
 
-    st.caption('first 20 rows of the data frame | url | label')
+    st.write('Features + URL + Label ==> Dataframe')
     st.markdown('label is 1 for phishing, 0 for legitimate')
     number = st.slider("Select row number to display", 0, 100)
     st.dataframe(ml.legitimate_df.head(number))
@@ -116,24 +118,24 @@ else:
 
 url = st.text_input('Enter the URL')
 # check the url is valid or not
-
-try:
-    response = re.get(url, verify=False, timeout=4)
-    if response.status_code != 200:
-        print(". HTTP connection was not successful for the URL: ", url)
-    else:
-        soup = BeautifulSoup(response.content, "html.parser")
-        vector = [fe.create_vector(soup)]  # it should be 2d array, so I added []
-        result = model.predict(vector)
-        if result[0] == 0:
-            st.write("This web page seems a legitimate!")
-            st.balloons()
+if st.button('Check!'):
+    try:
+        response = re.get(url, verify=False, timeout=4)
+        if response.status_code != 200:
+            print(". HTTP connection was not successful for the URL: ", url)
         else:
-            st.write("Attention! This web page is a potential PHISHING!")
-            st.snow()
+            soup = BeautifulSoup(response.content, "html.parser")
+            vector = [fe.create_vector(soup)]  # it should be 2d array, so I added []
+            result = model.predict(vector)
+            if result[0] == 0:
+                st.success("This web page seems a legitimate!")
+                st.balloons()
+            else:
+                st.warning("Attention! This web page is a potential PHISHING!")
+                st.snow()
 
-except re.exceptions.RequestException as e:
-    print("--> ", e)
+    except re.exceptions.RequestException as e:
+        print("--> ", e)
 
 
 
