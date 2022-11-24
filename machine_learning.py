@@ -75,7 +75,7 @@ predictions = svm_model.predict(x_test)
 
 
 # Step 9 create a confusion matrix and tn, tp, fn , fp
-tn, tp, fn, fp = confusion_matrix(y_true=y_test, y_pred=predictions).ravel()
+tn, fp, fn, tp = confusion_matrix(y_true=y_test, y_pred=predictions).ravel()
 
 
 # Step 10 calculate accuracy, precision and recall scores
@@ -153,7 +153,7 @@ for i in range(0, K):
     # ----- RANDOM FOREST ----- #
     rf_model.fit(X_train_list[i], Y_train_list[i])
     rf_predictions = rf_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=rf_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=rf_predictions).ravel()
     rf_accuracy, rf_precision, rf_recall = calculate_measures(tn, tp, fn, fp)
     rf_accuracy_list.append(rf_accuracy)
     rf_precision_list.append(rf_precision)
@@ -162,7 +162,7 @@ for i in range(0, K):
     # ----- DECISION TREE ----- #
     dt_model.fit(X_train_list[i], Y_train_list[i])
     dt_predictions = dt_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=dt_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=dt_predictions).ravel()
     dt_accuracy, dt_precision, dt_recall = calculate_measures(tn, tp, fn, fp)
     dt_accuracy_list.append(dt_accuracy)
     dt_precision_list.append(dt_precision)
@@ -171,7 +171,7 @@ for i in range(0, K):
     # ----- SUPPORT VECTOR MACHINE ----- #
     svm_model.fit(X_train_list[i], Y_train_list[i])
     svm_predictions = svm_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=svm_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=svm_predictions).ravel()
     svm_accuracy, svm_precision, svm_recall = calculate_measures(tn, tp, fn, fp)
     svm_accuracy_list.append(svm_accuracy)
     svm_precision_list.append(svm_precision)
@@ -180,7 +180,7 @@ for i in range(0, K):
     # ----- ADABOOST ----- #
     ab_model.fit(X_train_list[i], Y_train_list[i])
     ab_predictions = ab_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=ab_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=ab_predictions).ravel()
     ab_accuracy, ab_precision, ab_recall = calculate_measures(tn, tp, fn, fp)
     ab_accuracy_list.append(ab_accuracy)
     ab_precision_list.append(ab_precision)
@@ -189,7 +189,7 @@ for i in range(0, K):
     # ----- GAUSSIAN NAIVE BAYES ----- #
     nb_model.fit(X_train_list[i], Y_train_list[i])
     nb_predictions = nb_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=nb_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=nb_predictions).ravel()
     nb_accuracy, nb_precision, nb_recall = calculate_measures(tn, tp, fn, fp)
     nb_accuracy_list.append(nb_accuracy)
     nb_precision_list.append(nb_precision)
@@ -198,7 +198,7 @@ for i in range(0, K):
     # ----- NEURAL NETWORK ----- #
     nn_model.fit(X_train_list[i], Y_train_list[i])
     nn_predictions = nn_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=nn_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=nn_predictions).ravel()
     nn_accuracy, nn_precision, nn_recall = calculate_measures(tn, tp, fn, fp)
     nn_accuracy_list.append(nn_accuracy)
     nn_precision_list.append(nn_precision)
@@ -207,7 +207,7 @@ for i in range(0, K):
     # ----- K-NEIGHBOURS CLASSIFIER ----- #
     kn_model.fit(X_train_list[i], Y_train_list[i])
     kn_predictions = kn_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=kn_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=kn_predictions).ravel()
     kn_accuracy, kn_precision, kn_recall = calculate_measures(tn, tp, fn, fp)
     kn_accuracy_list.append(kn_accuracy)
     kn_precision_list.append(kn_precision)
@@ -217,7 +217,7 @@ for i in range(0, K):
     # ----- GAUSSIAN PROCESS ----- #
     gp_model.fit(X_train_list[i], Y_train_list[i])
     gp_predictions = gp_model.predict(X_test_list[i])
-    tn, tp, fn, fp = confusion_matrix(y_true=Y_test_list[i], y_pred=gp_predictions).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true=Y_test_list[i], y_pred=gp_predictions).ravel()
     gp_accuracy, gp_precision, gp_recall = calculate_measures(tn, tp, fn, fp)
     gp_accuracy_list.append(gp_accuracy)
     gp_precision_list.append(gp_precision)
