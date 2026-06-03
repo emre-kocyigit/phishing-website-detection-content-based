@@ -11,27 +11,32 @@ model training, and evaluation across five classifiers.
 ---
 
 ## Pipeline overview
-Phishing URLs (PhishTank)          Legitimate URLs (Tranco)
-│                                   │
-└──────────┬────────────────────────┘
-▼
-data_collector.py
-(HTTP requests + BeautifulSoup)
-│
-▼
-feature_extraction.py
-(HTML tag-based features → numerical vectors)
-│
-▼
-structured_data_phishing.csv
-structured_data_legitimate.csv
-│
-▼
-machine_learning.py
-(train / evaluate / compare)
-│
-▼
-Results + confusion matrices
+
+<pre>
+Phishing URLs (PhishTank)       Legitimate URLs (Tranco)
+        │                                │
+        └──────────┬─────────────────────┘
+                   ▼
+          data_collector.py
+          (HTTP requests + BeautifulSoup)
+                   │
+                   ▼
+        feature_extraction.py
+        (HTML tag-based features → numerical vectors)
+                   │
+                   ▼
+     structured_data_phishing.csv
+     structured_data_legitimate.csv
+                   │
+                   ▼
+          machine_learning.py
+          (train / evaluate / compare)
+                   │
+                   ▼
+        Results + confusion matrices
+</pre>
+
+---
 
 ## Features extracted
 
@@ -95,6 +100,8 @@ python app.py
 ```
 
 ## Project structure
+
+```
 ├── data_collector.py        # Collects HTML content from URLs
 ├── feature_extraction.py    # Extracts content-based features
 ├── features.py              # Feature definitions
@@ -102,6 +109,7 @@ python app.py
 ├── app.py                   # Flask prediction interface
 ├── structured_data_*.csv    # Pre-built datasets (ready to use)
 └── requirements.txt
+```
 
 ## Tech stack
 
